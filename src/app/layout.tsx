@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { type Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 
+import { ThemeProvider } from '@/components/providers/theme-provider';
 import '@/styles/globals.css';
 
 const font = Montserrat({ subsets: ['latin'] });
@@ -17,8 +18,17 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang='en'>
-      <body className={font.className}>{children}</body>
+    <html lang='en' suppressHydrationWarning>
+      <body className={font.className}>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
