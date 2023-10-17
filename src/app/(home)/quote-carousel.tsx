@@ -30,20 +30,26 @@ export function QuoteCarousel() {
   }
 
   return (
-    <section className='relative z-20 flex flex-col sm:flex-row max-w-full items-center sm:mx-9 sm:max-w-lg sm:gap-6 md:max-w-xl lg:max-w-2xl'>
+    <section className='relative z-20 flex w-full flex-col items-center gap-2 md:flex-row'>
       <ChevronLeft
-        className='absolute -left-12 h-10 w-10 shrink-0 cursor-pointer sm:block hidden hover:text-muted-foreground transition-colors'
+        className='hidden h-10 w-10 cursor-pointer transition-colors hover:text-muted-foreground md:block'
         onClick={() => changeQuote(-1)}
       />
       {quotes.map((quote, i) => (
         <div
           key={i}
           className={cn(
-            'hidden h-44 w-full rounded-lg border bg-card/50 p-3 shadow-md',
-            currentQuote === i && 'flex flex-col'
+            'hidden',
+            currentQuote === i &&
+              'relative flex min-h-[11rem] w-full flex-col rounded-lg bg-card/50 p-3 shadow md:max-w-xl',
           )}
         >
-          <div className='mb-3 flex items-center gap-2'>
+          <QuoteIcon
+            size={32}
+            fill='currentColor'
+            className='absolute -right-4 -top-4 text-primary'
+          />
+          <div className='flex items-center gap-2'>
             <Image
               src={quote.icon}
               alt="Quoter's icon"
@@ -51,24 +57,24 @@ export function QuoteCarousel() {
               height={40}
               className='rounded-full'
             />
-            <div className='text-left'>
-              <div className='flex gap-2'>
-                <span>{quote.user}</span>
-                <div className='flex items-center'>
+            <div>
+              <div className='flex items-center gap-1'>
+                <span className='whitespace-nowrap'>{quote.user}</span>
+                <div className='flex-shrink-0'>
                   <Image
                     src={quote.flag}
                     alt="Quoter's flag"
                     width={25}
                     height={25}
-                    className='shrink-0 rounded-[2px] border shadow-xl'
+                    className='border'
                   />
                 </div>
               </div>
               <div className='flex'>
                 {Array.from(
                   { length: MAX_STAR_RATING },
-                  (_, index) => index + 1
-                ).map(num => (
+                  (_, index) => index + 1,
+                ).map((num) => (
                   <Star
                     key={num}
                     size={16}
@@ -79,28 +85,23 @@ export function QuoteCarousel() {
               </div>
             </div>
           </div>
-          <p className='my-auto text-center text-muted-foreground'>
-            {quote.text}
-          </p>
-          <QuoteIcon
-            size={32}
-            fill='currentColor'
-            className='relative bottom-full left-full shrink-0 text-primary'
-          />
+          <div className='flex flex-grow items-center justify-center'>
+            <p className='text-center'>{quote.text}</p>
+          </div>
         </div>
       ))}
       <ChevronRight
-        className='absolute -right-12 h-10 w-10 shrink-0 cursor-pointer sm:block hidden hover:text-muted-foreground transition-colors'
+        className='hidden h-10 w-10 cursor-pointer transition-colors hover:text-muted-foreground md:block'
         onClick={() => changeQuote(1)}
       />
-      <div className='sm:hidden flex gap-1 absolute -bottom-8'>
+      <div className='absolute -bottom-8 flex gap-1'>
         {quotes.map((_, index) => (
           <div
             key={index}
             onClick={() => setCurrentQuote(index)}
             className={cn(
-              'h-3 rounded-full w-3 border bg-muted-foreground transition-width duration-300 ease-in-out cursor-pointer',
-              index === currentQuote && 'bg-primary w-6'
+              'h-3 w-3 cursor-pointer rounded-full bg-muted-foreground duration-300 ease-in-out md:hidden',
+              index === currentQuote && 'w-6 bg-primary',
             )}
           />
         ))}
