@@ -14,7 +14,7 @@ export function IntroMessage() {
         Join 0 million players now!
       </p>
       <Button size='lg' className='mt-4' asChild>
-        <Link href='/'>Play for Free!</Link>
+        <Link href='/register'>Play for Free!</Link>
       </Button>
     </section>
   );

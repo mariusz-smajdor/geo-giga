@@ -1,7 +1,14 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import { MoonStar, Sun, SunMoon, User as UserIcon } from 'lucide-react';
+import {
+  MoonStar,
+  Sun,
+  SunMoon,
+  User as UserIcon,
+  ClipboardEdit as SignUp,
+} from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -31,6 +38,11 @@ export function UserMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>Play for Free!</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <SignUp className='mr-2 h-4 w-4' />
+          <Link href='/register'>Sign up</Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
