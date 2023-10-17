@@ -42,7 +42,7 @@ export function FormContainer({ children }: AuthContainerProps) {
         </span>
         {children}
       </section>
-      <Globe className='absolute right-0 lg:static' />
+      <Globe className='absolute md:right-0 lg:static' />
     </main>
   );
 }
