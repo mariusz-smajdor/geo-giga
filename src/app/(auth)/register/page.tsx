@@ -1,11 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { registerSchema, type RegisterSchema } from '@/lib/zod-schema';
 import { FormContainer } from '../form-container';
+import { useToast } from '@/components/ui/toast/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,6 +21,8 @@ import {
 } from '@/components/ui/form';
 
 export default function Register() {
+  const { toast } = useToast();
+  const router = useRouter();
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -28,7 +33,24 @@ export default function Register() {
   });
 
   async function onSubmit(values: RegisterSchema) {
-    console.log(values);
+    try {
+      await axios.post('/api/register', values);
+      toast({
+        title: 'Successfully registered!',
+        description: 'You can now login to your account.',
+      });
+      router.push('/login');
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const errors = error.response.data;
+        Object.entries(errors).forEach(([key, value]) => {
+          form.setError(key as keyof RegisterSchema, {
+            type: 'server',
+            message: value as string,
+          });
+        });
+      }
+    }
   }
 
   return (
