@@ -3,6 +3,7 @@ import { type Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 
 import { ThemeProvider } from '@/components/providers/theme-provider';
+import { Toaster } from '@/components/ui/toast/toaster';
 import { Header } from '@/components/layout/header';
 import '@/styles/globals.css';
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           <Header />
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
