@@ -7,6 +7,7 @@ import {
   Sun,
   SunMoon,
   User as UserIcon,
+  LogIn,
   ClipboardEdit as SignUp,
 } from 'lucide-react';
 
@@ -39,6 +40,10 @@ export function UserMenu() {
       <DropdownMenuContent>
         <DropdownMenuLabel>Play for Free!</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <LogIn className='mr-2 h-4 w-4' />
+          <Link href='/login'>Sign in</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <SignUp className='mr-2 h-4 w-4' />
           <Link href='/register'>Sign up</Link>
