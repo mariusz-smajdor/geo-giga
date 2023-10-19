@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
 import { Globe } from '@/components/ui/globe';
@@ -27,7 +28,7 @@ export function FormContainer({ children }: AuthContainerProps) {
               : 'Login to play the best geographic games!'}
           </p>
         </section>
-        <Button variant='outline'>
+        <Button variant='outline' onClick={() => signIn('google')}>
           <Image
             src='/google-logo.png'
             alt='Google Logo'
