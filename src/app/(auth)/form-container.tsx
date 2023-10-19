@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { redirect, usePathname } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
@@ -11,7 +12,10 @@ type AuthContainerProps = {
 };
 
 export function FormContainer({ children }: AuthContainerProps) {
+  const { data: session } = useSession();
   const pathname = usePathname();
+
+  if (session) redirect('/');
 
   return (
     <main className='container relative flex h-[calc(100vh-3.5rem-1px)] items-center justify-center md:justify-normal lg:justify-evenly'>
