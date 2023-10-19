@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { loginSchema, type LoginSchema } from '@/lib/zod-schema';
 import { FormContainer } from '../form-container';
+import { useToast } from '@/components/ui/toast/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,6 +20,7 @@ import {
 } from '@/components/ui/form';
 
 export default function Login() {
+  const { toast } = useToast();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -27,7 +30,27 @@ export default function Login() {
   });
 
   async function onSubmit(values: LoginSchema) {
-    console.log(values);
+    try {
+      const res = await signIn('credentials', {
+        ...values,
+        redirect: false,
+      });
+
+      if (res?.error) {
+        form.setError('password', {
+          message: 'Invalid credentials.',
+        });
+        return;
+      }
+
+      toast({
+        title: 'Successfully logged in!',
+      });
+    } catch (error) {
+      form.setError('password', {
+        message: 'Something went wrong. Please try again.',
+      });
+    }
   }
 
   return (
