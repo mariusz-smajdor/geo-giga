@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Info } from 'lucide-react';
 
 import { registerSchema, type RegisterSchema } from '@/lib/zod-schema';
 import { FormContainer } from '../form-container';
@@ -19,6 +20,12 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 export default function Register() {
   const { toast } = useToast();
@@ -78,7 +85,29 @@ export default function Register() {
             name='password'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password:</FormLabel>
+                <FormLabel className='flex items-center justify-between'>
+                  Password:
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className='h-3 w-3 cursor-pointer text-muted-foreground' />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <section>
+                          <p className='my-1'>
+                            Password must contain at least one:
+                          </p>
+                          <ul className='list-disc px-4 text-muted-foreground'>
+                            <li>uppercase letter</li>
+                            <li>lowercase letter</li>
+                            <li>number</li>
+                            <li>special character</li>
+                          </ul>
+                        </section>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </FormLabel>
                 <FormControl>
                   <Input
                     type='password'
