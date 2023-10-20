@@ -45,6 +45,29 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async signIn({ user }) {
+      if (user) {
+        user.name = '';
+        user.image = '';
+      }
+      return true;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.name = user.name;
+        token.picture = user.image;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session?.user && token) {
+        session.user.name = token.name;
+        session.user.image = token.picture;
+      }
+      return session;
+    },
+  },
   pages: {
     signIn: '/login',
   },
