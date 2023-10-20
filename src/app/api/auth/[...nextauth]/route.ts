@@ -48,9 +48,11 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }) {
       if (user) {
-        user.name = '';
-        user.image = '';
+        user.name = `GIGA${user.id.slice(-8)}`;
+        user.image =
+          'https://ddragon-webp.lolmath.net/latest/img/profileicon/0.webp';
       }
+
       return true;
     },
     async jwt({ token, user }) {
