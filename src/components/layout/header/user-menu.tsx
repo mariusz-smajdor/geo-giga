@@ -48,12 +48,24 @@ export function UserMenu() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {user ? (
-          <DropdownMenuItem asChild>
-            <div className='flex items-center gap-2' onClick={() => signOut()}>
-              <LogOut className='h-4 w-4' />
-              Sign out
-            </div>
-          </DropdownMenuItem>
+          <>
+            <DropdownMenuItem asChild>
+              <Link className='flex items-center gap-2' href='/'>
+                <UserIcon className='h-4 w-4' />
+                Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <div
+                className='flex items-center gap-2'
+                onClick={() => signOut()}
+              >
+                <LogOut className='h-4 w-4' />
+                Sign out
+              </div>
+            </DropdownMenuItem>
+          </>
         ) : (
           <>
             <DropdownMenuItem asChild>
